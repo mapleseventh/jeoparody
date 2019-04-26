@@ -1,0 +1,33 @@
+{
+  "name": "jeoparody",
+  "version": "1.0.0",
+  "description": "",
+  "main": "./client/index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github/dornestrong/jeoparody.git"
+  },
+  "keywords": [
+    "trivia",
+    "trebek",
+    "pen",
+    "is",
+    "mighter"
+  ],
+  "author": "dorneStrong",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4",
+    "redux": "^4.0.1"
+  },
+  "devDependencies": {
+    "webpack": "^4.30.0",
+    "webpack-dev-server": "^3.3.1"
+  }
+}
