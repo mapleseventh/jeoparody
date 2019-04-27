@@ -9,8 +9,10 @@ const Column = (props) => {
 
   return (
     <div className='column-component-div'>
-      <p>{props.questionData[0].name}</p>
-      <CardComponent cardQuestion={props.questionData[0].clues[0].clue}/>
+      <p>This is our column</p>
+      <CardComponent 
+      //cardQuestion={props.questionData[0].clues[0].clue}
+      />
     </div>
   )
 }

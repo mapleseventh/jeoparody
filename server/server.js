@@ -4,8 +4,12 @@ const http = require('http');
 const bodyParser = require('body-parser');
 const server = http.createServer(app);
 
+// const cors = require('cors');
+// app.use(cors());
+
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
+
 
 app.post('/signup', (req, res) => {
   

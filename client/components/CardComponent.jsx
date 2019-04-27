@@ -4,7 +4,8 @@ const Card = (props) => {
 
   return (
     <div className='card-component-div'>
-      <p>{props.cardQuestion}</p>
+      <p>This is the card
+      //{props.cardQuestion}</p>
     </div>
   )
 }
