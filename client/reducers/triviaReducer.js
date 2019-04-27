@@ -15,7 +15,8 @@ import * as types from '../constants/actionTypes';
 const initialState = {
     username: '',
     totalScore: 0,
-    categories:
+    questionData:
+    // Need to add value for player answers to each card object
         [
             {   
                 name: "School Mottos",
@@ -155,6 +156,7 @@ const triviaReducer = (state = initialState, action) => {
 
     switch (action.types) {
         case types.FLIP_CARD:
+
             return state;
 
         default:
