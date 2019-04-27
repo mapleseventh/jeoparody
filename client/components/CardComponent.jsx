@@ -2,9 +2,13 @@ import React from 'react';
 
 const Card = (props) => {
 
+  const { value, clue, answer, state } = props;
+
+
+
   return (
     <div className='card-component-div'>
-      <p>{props.cardQuestion}</p>
+      <div className='point-value'>${value}</div>
     </div>
   )
 }
