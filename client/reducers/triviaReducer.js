@@ -18,7 +18,7 @@ const initialState = {
     questionData:
     // Need to add value for player answers to each card object
         [
-            {   
+            {
                 name: "School Mottos",
                 clues: [
                     {
@@ -147,7 +147,26 @@ const initialState = {
                 ]
             },
 
+        ],
+    currentGame: {
+        score: 123,
+        questions: [
+            {
+                category: 'eddie murphy movies',
+                question: 'What country did Price Akeem come from?',
+                correct: 'Zamunda',
+                answered: 'America',
+                time: 5,
+            },
+            {
+                category: 'eddie murphy movies',
+                question: 'Complete this quote: Looking Good Billy Rey',
+                correct: 'Feeling good Lewis',
+                answered: 'Feeling good Lewis',
+                time: 3,
+            },
         ]
+    }
 }
 
 
