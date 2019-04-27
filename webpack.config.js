@@ -1,35 +1,32 @@
-const webpack = require('webpack');
+
 const path = require('path');
 
-const entry = [
-  './client/index.js'
-];
-
-const output = {
-  path: path.resolve(__dirname, 'dist'),
-  publicPath: '/dist/',
-  filename: 'bundle.js',
-};
 
 module.exports = {
-  entry, output,
-  devtool: "eval-source-map",
+  entry: './client/index.js',
+  output: {
+    path: path.resolve(__dirname, 'dist'),
+    filename: 'bundle.js',
+  },
+  mode: 'development',
   module: {
-    loaders: [
+    rules: [
       {
         test: /.(js|jsx)$/,
-        exclude: /node_modules/,
+        exclude: /(node_modules)/,
         loader: 'babel-loader',
         query: {
-          presets:[ 'es2015', 'react', 'stage-2' ]
+          presets: ['@babel/preset-react','@babel/preset-env']
         }
       },
-      { 
-        test: /\.css$/, 
-        use: [ {loader: 'style-loader'} , {loader: 'css-loader'}], 
-        exclude: /(node_modules)/ 
-    }
-    ],
+      {
+        test: /\.css$/,
+        use: [{ loader: 'style-loader' }, { loader: 'css-loader' }],
+        exclude: /(node_modules)/
+      }
+    ]
   },
-};    
-          
+  devServer: {
+    contentBase: path.resolve(__dirname, "client")
+  },
+};
