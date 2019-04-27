@@ -22,6 +22,8 @@ gameController.saveGame = (req, res, next) => {
           bodyObj.answered = event.answered;
           bodyObj.time = event.time;
           let questionData = `INSERT INTO questions (question, loggedAnswer, correctAnswer, time, category) VALUES ('${bodyObj.question}', '${bodyObj.answered}', '${bodyObj.correct}', '${bodyObj.time}', '${bodyObj.category}')`;
+
+          //save question data to database
           client.query(questionData, (err, result) => {
             if (err) console.error ('Cannot save game data', err);
             console.log('Game data saved!', index)

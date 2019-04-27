@@ -29,6 +29,10 @@ app.post('/signup', userController.createUser, (req, res) => {
   res.end;
 });
 
+app.post('/login', userController.getUser, (req, res) => {
+
+})
+
 app.post('/game', gameController.saveGame, (req, res) => {
   res.status()
 })
