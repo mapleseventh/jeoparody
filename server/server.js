@@ -5,6 +5,7 @@ const bodyParser = require('body-parser');
 const pg = require('pg');
 
 const userController = require('./userController')
+const gameController = require('./gameController')
 
 const server = http.createServer(app);
 const conString = "postgres://egpfdyzm:T39wuuQoQ9DtnGVbxJZKx5Slob_4qGEk@hansken.db.elephantsql.com:5432/egpfdyzm";
@@ -28,6 +29,9 @@ app.post('/signup', userController.createUser, (req, res) => {
   res.end;
 });
 
+app.post('/game', gameController.saveGame, (req, res) => {
+  res.status()
+})
 
 
 
