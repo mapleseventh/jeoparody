@@ -3,14 +3,31 @@ import CardComponent from './CardComponent.jsx';
 
 const Column = (props) => {
 
-  console.log(props.questionData)
+  console.log(props.category)
 
+  const clues = props.category.clues;
+  const cards = [];
 
+  clues.forEach((current, i) => {
+    const newCard = <CardComponent
+      value={current.value}
+      clue={current.clue}
+      answer={current.answer}
+      state={current.state}
+      key={`${props.category.name}${i}`}
+
+    />
+    cards.push(newCard);
+  });
 
   return (
     <div className='column-component-div'>
-      <p>{props.questionData[0].name}</p>
-      <CardComponent cardQuestion={props.questionData[0].clues[0].clue}/>
+      <div className="category-name">
+        <span>{props.category.name}</span>
+      </div>
+      <div className="cards-container">
+        {cards}
+      </div>
     </div>
   )
 }
