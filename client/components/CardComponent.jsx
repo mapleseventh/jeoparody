@@ -8,12 +8,7 @@ const Card = (props) => {
 
   return (
     <div className='card-component-div'>
-<<<<<<< HEAD
-      <p>This is the card
-      //{props.cardQuestion}</p>
-=======
-      <div className='point-value'>${value}</div>
->>>>>>> Viper/master
+      <div className='point-value'>{value}</div>
     </div>
   )
 }
