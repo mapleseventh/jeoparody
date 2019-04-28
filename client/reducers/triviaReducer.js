@@ -176,6 +176,16 @@ const triviaReducer = (state = initialState, action) => {
     console.log(`Action: ${action.type}`);
 
     switch (action.type) {
+        case types.START_GAME:
+
+            let questionData = state.questionData.slice();
+            questionData = action.payload;
+            console.log('this is inside triviaReducer:  ' + questionData)
+            return {
+                ...state,
+                questionData
+            }
+
         case types.FLIP_CARD:
 
             return state;
@@ -185,12 +195,13 @@ const triviaReducer = (state = initialState, action) => {
 
             console.log(state.currentAnswer);
 
-            
+
 
             return {
                 ...state,
                 currentAnswer: ''
             };
+
         case types.INPUT_ANSWER:
             const currentAnswer = (action.payload.target.value);
             return {

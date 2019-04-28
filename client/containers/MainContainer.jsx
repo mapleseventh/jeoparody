@@ -11,6 +11,7 @@ const mapStateToProps = (store) => ({
 
 
 const mapDispatchToProps = (dispatch) => ({
+    startGame: () => dispatch (actions.startGame()),
     submitAnswer: (answer) => dispatch(actions.submitAnswer(answer)),
     inputAnswer: (event) => dispatch(actions.inputAnswer(event))
 });
@@ -38,6 +39,8 @@ class MainContainer extends React.Component {
 
         return (
             <div className='main-container-div'>
+                <button onClick={this.props.startGame}>Start Game</button>
+
                 <div className="column-container">
                     {categories}
                 </div>
