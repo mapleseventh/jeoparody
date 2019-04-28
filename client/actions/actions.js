@@ -16,3 +16,13 @@ export const flipCard = (event) => ({
   type: types.FLIP_CARD,
   payload: event,
 });
+
+export const inputAnswer = (event) => ({
+  type: types.INPUT_ANSWER,
+  payload: event,
+});
+
+export const submitAnswer = (event) => ({
+  type: types.SUBMIT_ANSWER,
+  payload: event,
+});

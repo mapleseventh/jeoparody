@@ -15,13 +15,16 @@ import * as types from '../constants/actionTypes';
 const initialState = {
     username: '',
     totalScore: 0,
-    categories:
+    currentQuestion: '',
+    currentAnswer: '',
+    questionData:
+        // Need to add value for player answers to each card object
         [
-            {   
+            {
                 name: "School Mottos",
                 clues: [
                     {
-                        clue: "Many schools use this motto from genesis, gods first spoken command",
+                        clue: "Many schools use this motto from genesis, gods first spoken comsdmand",
                         answer: "Let there be light",
                         state: "fresh",
                         value: 100
@@ -114,7 +117,7 @@ const initialState = {
                 ]
             },
             {
-                name: "Stock Clues",
+                name: "Potent Potables",
                 clues: [
                     {
                         clue: "Helllo World....I'm getting lazy",
@@ -146,17 +149,54 @@ const initialState = {
                 ]
             },
 
+        ],
+    currentGame: {
+        score: 123,
+        questions: [
+            {
+                category: 'eddie murphy movies',
+                question: 'What country did Price Akeem come from?',
+                correct: 'Zamunda',
+                answered: 'America',
+                time: 5,
+            },
+            {
+                category: 'eddie murphy movies',
+                question: 'Complete this quote: Looking Good Billy Rey',
+                correct: 'Feeling good Lewis',
+                answered: 'Feeling good Lewis',
+                time: 3,
+            },
         ]
+    }
 }
 
 
 const triviaReducer = (state = initialState, action) => {
+    console.log(`Action: ${action.type}`);
 
-
-    switch (action.types) {
+    switch (action.type) {
         case types.FLIP_CARD:
+
             return state;
 
+        case types.SUBMIT_ANSWER:
+            console.log('Answer Submitted');
+
+            console.log(state.currentAnswer);
+
+            
+
+            return {
+                ...state,
+                currentAnswer: ''
+            };
+        case types.INPUT_ANSWER:
+            const currentAnswer = (action.payload.target.value);
+            return {
+                ...state,
+                currentAnswer
+            }
         default:
             return state;
 
