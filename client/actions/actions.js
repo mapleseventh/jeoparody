@@ -23,9 +23,9 @@ export const inputAnswer = (event) => ({
   payload: event,
 });
 
-export const submitAnswer = (event) => ({
+export const submitAnswer = (input) => ({
   type: types.SUBMIT_ANSWER,
-  payload: event,
+  payload: input,
 });
 
 export const startGame = () => (dispatch, getState) => {

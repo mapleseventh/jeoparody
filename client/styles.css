@@ -8,6 +8,14 @@ html {
     margin: auto;  
 }
 
+#newGame {
+    padding: 30px;
+    background: yellow;
+    font-weight: bold;
+    font-size: 20;
+    border-radius: 5px
+}
+
 #answer-input{
     width: 700px;
     font-size: 1.5em;
@@ -20,7 +28,7 @@ html {
 }
 
 .clue-display {
-    /* display:none; */
+    display:none;
     height: 400px;
     width: 800px;
     background-color: lightskyblue;
@@ -33,6 +41,12 @@ html {
 
 .main-container-div {
     margin: 50px;
+}
+
+#totalScore {
+    color: white;
+ font-size: 70px;
+ text-align: center
 }
 
 .column-container {
