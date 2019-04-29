@@ -27,3 +27,4 @@ export const SET_GAMELOOP = "SET_GAMELOOP";
 export const GET_PLAYER_DATA = "GET_PLAYER_DATA";
 export const INPUT_USERNAME = "INPUT_USERNAME";
 export const PRESS_BUZZER = "PRESS_BUZZER";
+export const CLEAR_BUZZER = "CLEAR_BUZZER";

@@ -24,6 +24,7 @@ const mapDispatchToProps = (dispatch) => ({
 
     toggleBoard: () => dispatch(actions.toggleBoard()),
     getPlayerData: () => dispatch(actions.getPlayerData()),
+    clearBuzzers: () => dispatch(actions.clearBuzzers()),
     pressBuzzer: (event) => dispatch(actions.pressBuzzer(event)),
     inputUsername: (event) => dispatch(actions.inputUsername(event)),
     setGameLoopTrue: (event) => dispatch(actions.setGameLoopTrue(event)),
@@ -84,7 +85,7 @@ class MainContainer extends React.Component {
             return (
                 <div className='main-container-div'>
                     <button onClick={this.props.toggleBoard}>Toggle Board</button>
-                    <button onClick={this.props.getPlayerData}>Get Player Data</button>
+                    <button onClick={this.props.clearBuzzers}>Clear Buzzers</button>
                     <div id="playerColumn">
                         <h3>Players:</h3>
                         {playersArray}

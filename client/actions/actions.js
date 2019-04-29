@@ -22,6 +22,19 @@ export const inputUsername = (event) => ({
   payload: event.target.value
 })
 
+export const clearBuzzers = () => (dispatch, getState) => {
+  const url = '/api/clearBuzzers'
+  axios.get(url)
+  .then(response => {
+    return response.data
+  }).then(data => {
+    console.log('Buzzer Data', data)
+    dispatch({
+      type: types.CLEAR_BUZZER,
+    })
+  })
+};
+
 export const pressBuzzer = () => (dispatch, getState) => {
   let state = getState();
   let currentPlayer = state.trivia.currentPlayer;

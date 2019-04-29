@@ -226,12 +226,18 @@ const triviaReducer = (state = initialState, action) => {
 
         case types.INPUT_USERNAME:
             const currentPlayer = (action.payload);
-            
+
             return {
                 ...state,
                 currentPlayer
             }
 
+
+        case types.CLEAR_BUZZER:
+            console.log(`Clearing Buzzer State`);
+            return {
+                ...state
+            }
         case types.PRESS_BUZZER:
             console.log("Buzzer pressed");
             // TODO - disable input when username is set

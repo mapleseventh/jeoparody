@@ -66,7 +66,7 @@ app.get('/api/hitBuzzer', (req, res) => {
   gameState.players.forEach(player => {
     if (player.name == input) {
       newPlayer = false;
-    } 
+    }
   })
 
   if (newPlayer) {
@@ -80,13 +80,18 @@ app.get('/api/hitBuzzer', (req, res) => {
     return res.send("new player logged")
   }
 
-  gameState.players.forEach(player => {
-    if (player.name == currentPlayer) {
-      player.buzzed = true;
-    } else {
-      player.buzzed = false;
-    }
-  })
+  if (gameState.buzzerHit == false) {
+    gameState.buzzerHit = true;
+    gameState.players.forEach(player => {
+      if (player.name == currentPlayer) {
+        player.buzzed = true;
+      } else {
+        player.buzzed = false;
+      }
+    })
+  } else {
+    console.log(`Buzzer Already presed by someone else`);
+  }
   res.send("Got it")
 
   // if (gameState.buzzerHit) {
@@ -99,8 +104,17 @@ app.get('/api/hitBuzzer', (req, res) => {
 })
 
 //pass in player and amount of points to give that player
-app.get('/api/givePoints',(req,res) => {
+app.get('/api/givePoints', (req, res) => {
 
+})
+
+app.get('/api/clearBuzzers', (req, res) => {
+  console.log("Clearing Buzzers");
+  gameState.buzzerHit = false;
+  gameState.players.forEach(player => {
+    player.buzzed = false;
+  });
+  res.send("Done");
 })
 
 server.listen(3000, () => {
