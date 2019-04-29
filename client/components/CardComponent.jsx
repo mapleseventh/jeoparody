@@ -8,7 +8,7 @@ const Card = (props) => {
 
   return (
     <div className='card-component-div'>
-      <div className='point-value'>${value}</div>
+      <div className='point-value'>{value}</div>
     </div>
   )
 }
