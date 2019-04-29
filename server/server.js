@@ -2,10 +2,12 @@ const express = require('express');
 const app = express();
 const http = require('http');
 const bodyParser = require('body-parser');
+const cookieParser = require('cookie-parser');
 const pg = require('pg');
 
 const userController = require('./userController')
 const gameController = require('./gameController')
+const cookieController = require ('./cookieController')
 
 const server = http.createServer(app);
 const conString = "postgres://egpfdyzm:T39wuuQoQ9DtnGVbxJZKx5Slob_4qGEk@hansken.db.elephantsql.com:5432/egpfdyzm";
@@ -35,11 +37,16 @@ client.connect(function (err) {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-app.post('/signup', userController.createUser, (req, res) => {
-  res.end;
+
+app.get('/api/getLoginData', cookieController.verifyCookie, (req, res) => {
+  console.log("Is this route getting hit")
 });
 
-app.post('/login', userController.getUser, (req, res) => {
+app.post('/api/signup', userController.createUser, cookieController.setCookie, (req, res) => {
+  res.end()
+});
+
+app.post('/api/login', userController.verifyUser, (req, res) => {
 
 })
 
@@ -54,7 +61,7 @@ app.get('/api/getPlayers', (req, res) => {
 })
 
 // TODO - currentPlayer is only coming from buzzer query params
-app.get('/api/hitBuzzer', (req, res) => {
+app.get('/api/hitBuzzer', cookieController.setCookie, (req, res) => {
   let input = req.query.name;
   let currentPlayer = '';
   console.log(`User: ${input} buzzed in`);

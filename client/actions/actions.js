@@ -62,7 +62,7 @@ export const awardPoints = () => (dispatch, getState) => {
         buzzedPlayer = player.name;
   });
 
-  const curretPointValue = state.trivia.curretPointValue;
+  const currentValue = state.trivia.currentValue;
   //TODO - error checking player name
 
   if(buzzedPlayer == ''){
@@ -70,7 +70,7 @@ export const awardPoints = () => (dispatch, getState) => {
     return;
   }
 
-  let url = `/api/givePoints?name=${buzzedPlayer}&points=${curretPointValue}`;
+  let url = `/api/givePoints?name=${buzzedPlayer}&points=${currentValue}`;
   console.log(`API CAll: ${url}`);
   axios.get(url)
     .then(response => {
@@ -157,9 +157,9 @@ export const inputAnswer = (event) => ({
   payload: event,
 });
 
-export const submitAnswer = (event) => ({
+export const submitAnswer = (input) => ({
   type: types.SUBMIT_ANSWER,
-  payload: event,
+  payload: input,
 });
 
 export const startGame = () => (dispatch, getState) => {
