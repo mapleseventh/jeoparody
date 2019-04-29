@@ -27,6 +27,10 @@ module.exports = {
     ]
   },
   devServer: {
-    contentBase: path.resolve(__dirname, "client")
+    contentBase: path.resolve(__dirname, "client"),
+    proxy: {
+      '/api': 'http://[::1]:3000',  //added [::1] because voodoo https://github.com/saikat/react-apollo-starter-kit/issues/20
+      secure: false
+    },
   },
 };

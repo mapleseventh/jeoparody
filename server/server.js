@@ -11,6 +11,13 @@ const server = http.createServer(app);
 const conString = "postgres://egpfdyzm:T39wuuQoQ9DtnGVbxJZKx5Slob_4qGEk@hansken.db.elephantsql.com:5432/egpfdyzm";
 const client = new pg.Client(conString);
 
+const gameState = {
+  users: [],
+  current: null,
+  buzzerHit: false,
+};
+
+
 client.connect(function(err) {
   if(err) return console.error("Could not connect to postgres", err);
   console.log("Successful connection to elephantSQL");
@@ -41,13 +48,31 @@ app.post('/game', gameController.saveGame, (req, res) => {
 })
 
 
+//call from client to get game status for others
+app.get('/api/addUser',(req,res) => {
+  console.log('Params:');
+  console.log(req.query);
+  gameState.users.push(req.query.name);
+    res.send(`Added ${req.query.name}`)
+})
+
+app.get('/api/getUsers',(req,res)=> {
+  res.send(gameStatus.users);
+})
+
+app.get('/api/clickButton',(req,res)=>{
+  user = req.query.name;
+  if(gameState.buzzerHit){
+    res.send("Too Slow!!")
+  }else{
+    gameState.buzzerHit = true;
+    res.send("YourAnswer??")
+  }
+})
 
 
-
-
-
-server.listen(8080, () => {
-  console.log('listening at http://localhost:8080');
+server.listen(3000, () => {
+  console.log('listening at http://localhost:3000');
 });
 
 module.exports = server;
