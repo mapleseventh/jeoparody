@@ -60,11 +60,13 @@ app.get('/api/hitBuzzer', (req, res) => {
   console.log(`User: ${input} buzzed in`);
   console.log(gameState.players);
   let newPlayer = true;
+  currentPlayer = input;
+
+  //check existing players to see if the buzzer was from them
   gameState.players.forEach(player => {
     if (player.name == input) {
-      currentPlayer = input;
       newPlayer = false;
-    }
+    } 
   })
 
   if (newPlayer) {
