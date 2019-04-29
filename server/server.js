@@ -12,18 +12,18 @@ const conString = "postgres://egpfdyzm:T39wuuQoQ9DtnGVbxJZKx5Slob_4qGEk@hansken.
 const client = new pg.Client(conString);
 
 const gameState = {
-  users: [],
+  players: [],
   current: null,
   buzzerHit: false,
 };
 
 
-client.connect(function(err) {
-  if(err) return console.error("Could not connect to postgres", err);
+client.connect(function (err) {
+  if (err) return console.error("Could not connect to postgres", err);
   console.log("Successful connection to elephantSQL");
-  
-  client.query('SELECT NOW() AS "theTime"', function(err, result) {
-    if(err) return console.error('Error running query', err);
+
+  client.query('SELECT NOW() AS "theTime"', function (err, result) {
+    if (err) return console.error('Error running query', err);
     console.log(result.rows[0].theTime);
     client.end()
   });
@@ -49,27 +49,57 @@ app.post('/game', gameController.saveGame, (req, res) => {
 
 
 //call from client to get game status for others
-app.get('/api/addUser',(req,res) => {
-  console.log('Params:');
-  console.log(req.query);
-  gameState.users.push(req.query.name);
-    res.send(`Added ${req.query.name}`)
+app.get('/api/getPlayers', (req, res) => {
+  res.send(gameState.players);
 })
 
-app.get('/api/getUsers',(req,res)=> {
-  res.send(gameStatus.users);
-})
+// TODO - currentPlayer is only coming from buzzer query params
+app.get('/api/hitBuzzer', (req, res) => {
+  let input = req.query.name;
+  let currentPlayer = '';
+  console.log(`User: ${input} buzzed in`);
+  console.log(gameState.players);
+  let newPlayer = true;
+  gameState.players.forEach(player => {
+    if (player.name == input) {
+      currentPlayer = input;
+      newPlayer = false;
+    }
+  })
 
-app.get('/api/clickButton',(req,res)=>{
-  user = req.query.name;
-  if(gameState.buzzerHit){
-    res.send("Too Slow!!")
-  }else{
-    gameState.buzzerHit = true;
-    res.send("YourAnswer??")
+  if (newPlayer) {
+    const playerObj = {
+      name: currentPlayer,
+      points: 0,
+      buzzed: false,
+    }
+    gameState.players.push(playerObj);
+    console.log(`New player ${playerObj.name} Created`);
+    return res.send("new player logged")
   }
+
+  gameState.players.forEach(player => {
+    if (player.name == currentPlayer) {
+      player.buzzed = true;
+    } else {
+      player.buzzed = false;
+    }
+  })
+  res.send("Got it")
+
+  // if (gameState.buzzerHit) {
+  //   res.send("Too Slow!!")
+  // } else {
+  //   gameState.buzzerHit = true;
+  //   res.send("YourAnswer??")
+  // }
+
 })
 
+//pass in player and amount of points to give that player
+app.get('/api/givePoints',(req,res) => {
+
+})
 
 server.listen(3000, () => {
   console.log('listening at http://localhost:3000');
