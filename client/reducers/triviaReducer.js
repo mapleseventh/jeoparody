@@ -16,7 +16,10 @@ const initialState = {
     username: '',
     totalScore: 0,
     currentQuestion: '',
+    currentClue: '',
     currentAnswer: '',
+    currentValue: 0,
+    questionData: '',
     //multiplayer
     currentUserBoard: false,
     currentPlayer: '',
@@ -261,19 +264,63 @@ const triviaReducer = (state = initialState, action) => {
             }
 
         case types.FLIP_CARD:
+            console.log('--------------------------------------------')
+            console.log('flipcard payload:', action.payload);
+ 
+            let column = action.payload[0];
+            let card = action.payload[1];
+            let clue = state.questionData[column].clues[card]['clue'];
+            let currentState = state.questionData[column].clues[card]['state'];
+            let currentValue = state.questionData[column].clues[card]['value'];
+            let questionClue = action.payload;
+            if(currentState === 'fresh') {
+                document.querySelector('#question').innerHTML = clue;
+                document.querySelector('.clue-display').style.display = 'block';
+            }
 
-            return state;
+            return {
+                ...state,
+                questionClue,
+                currentValue
+            };
 
         case types.SUBMIT_ANSWER:
             console.log('Answer Submitted');
-            console.log(state.currentAnswer);
+            // first, take the input value from input box
+            // second, check the input answer is equal to the right answer or not
+ 
+             column = state.questionClue[0];
+             card = state.questionClue[1];
+             let totalScore = state.totalScore;
+             let check;
+            if(state.currentAnswer.toLowerCase() === state.questionData[column].clues[card]['answer'].toLowerCase()) { // only for string type answer, still need condition for number and boolean
+                console.log('correct!'); 
+                check = true;                                                                     
+            } else {
+                console.log(false);
+                check = false;
+            }
+            state.questionData[column].clues[card]['state'] = state.currentAnswer;
+            if(check){
+                totalScore += state.currentValue;
+                document.getElementById(`${state.questionClue}`).style.background = 'green';
+                alert('Yeah! You got it!');
+            } else if(check === false){
+                document.getElementById(`${state.questionClue}`).style.background = 'red';
+                alert("NO! You didn't got it!");
+            }
+            document.querySelector('.clue-display').style.display = 'none';
+
             return {
                 ...state,
-                currentAnswer: ''
+                currentAnswer: '',
+                questionClue: '',
+                totalScore
             };
 
         case types.INPUT_ANSWER:
-            const currentAnswer = (action.payload.target.value);
+        console.log('INPUT_ANSWER:', action.payload)
+            const currentAnswer = action.payload;
             return {
                 ...state,
                 currentAnswer
