@@ -35,6 +35,7 @@ const mapDispatchToProps = (dispatch) => ({
 
     getLoginData: () => dispatch(actions.getLoginData()),
     submitLogin: () => dispatch(actions.submitLogin()),
+    createUser: () => dispatch(actions.createUser()),
 });
 
 
@@ -127,6 +128,7 @@ class MainContainer extends React.Component {
             return (
                 <div>
                     <button onClick={this.props.toggleBoard}>Toggle Board</button>
+                    <button className="createUserBtn" onClick={this.props.createUser}>Create User</button>
                     <form id="loginform" onSubmit={(e) => {
                         e.preventDefault();
                         console.log(e.target.username.value);
@@ -135,7 +137,7 @@ class MainContainer extends React.Component {
                     }}>
                         <input type="text" id="username" placeholder="Username" onChange={this.props.inputUsername} />
                         <input type="text" id="password" placeholder="Password" onChange={this.props.inputPassword} />
-                        <input type="submit" />
+                        <input type="submit" value="Login"/>
                     </form>
                     <form onSubmit={(e) => {
                         e.preventDefault();

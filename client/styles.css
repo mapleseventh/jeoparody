@@ -119,6 +119,10 @@ html {
     float: right;
 }
 
+.createUserBtn{
+    float: right;
+}
+
 .disableUserInput{
     pointer-events: none;
 }

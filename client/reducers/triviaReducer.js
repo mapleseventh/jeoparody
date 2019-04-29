@@ -284,6 +284,13 @@ const triviaReducer = (state = initialState, action) => {
             }
         }
 
+        case types.CREATE_USER:{
+            //logic mostly in back end
+            return {
+                ...state
+            }
+        }
+
         case types.CLEAR_BUZZER:
             console.log(`Clearing Buzzer State`);
             return {
