@@ -5,7 +5,7 @@ Connecting via elephantSQL;
 =========================================*/
 
 
-var pg = require('pg');
+const pg = require('pg');
 
 const conString = "postgres://egpfdyzm:T39wuuQoQ9DtnGVbxJZKx5Slob_4qGEk@hansken.db.elephantsql.com:5432/egpfdyzm";
 const client = new pg.Client(conString);
