@@ -35,29 +35,40 @@ class MainContainer extends React.Component {
             const newColumn = <ColumnComponent category={element} key={element.name} />
             categories.push(newColumn);
         });
+        if (this.props.currentUserBoard) {
+            return (
+                <div className='main-container-div'>
+                    <div className="column-container">
+                        {categories}
+                    </div>
 
-        return (
-            <div className='main-container-div'>
-                <div className="column-container">
-                    {categories}
+                    <div className='clue-display'>
+                        What is the best game show ever?
                 </div>
 
-                <div className='clue-display'>
-                    What is the best game show ever?
+                    <form id='answer-form'
+                        onSubmit={e => {
+                            e.preventDefault();
+                            this.props.submitAnswer()
+                        }} >
+                        <input id="answer-input"
+                            onChange={this.props.inputAnswer}
+                            value={this.props.currentAnswer} />
+                        <input id="submit-answer" type='submit' />
+                    </form>
+                </div >
+            )
+        } else {
+            return (
+                <div>
+                    <form>
+                        <input type="text" />
+                        <label htmlFor="playerName">Name:</label>
+                        <input type="submit" />
+                    </form>
                 </div>
-
-                <form id='answer-form'
-                    onSubmit={e => {
-                        e.preventDefault();
-                        this.props.submitAnswer()
-                    }} >
-                    <input id="answer-input"
-                        onChange={this.props.inputAnswer}
-                        value={this.props.currentAnswer} />
-                    <input id="submit-answer" type='submit' />
-                </form>
-            </div >
-        )
+            )
+        }
     }
 }
 

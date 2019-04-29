@@ -17,6 +17,7 @@ const initialState = {
     totalScore: 0,
     currentQuestion: '',
     currentAnswer: '',
+    currentUserBoard: false,
     questionData:
         // Need to add value for player answers to each card object
         [
