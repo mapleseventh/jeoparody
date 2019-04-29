@@ -6,6 +6,7 @@ const pg = require('pg');
 
 const userController = require('./userController')
 const gameController = require('./gameController')
+const cookieController = require ('./cookieController')
 
 const server = http.createServer(app);
 const conString = "postgres://egpfdyzm:T39wuuQoQ9DtnGVbxJZKx5Slob_4qGEk@hansken.db.elephantsql.com:5432/egpfdyzm";
@@ -25,11 +26,15 @@ client.connect(function(err) {
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
+
+app.get('/', cookieController.setCookie, (req, res) => {
+});
+
 app.post('/signup', userController.createUser, (req, res) => {
   res.end;
 });
 
-app.post('/login', userController.getUser, (req, res) => {
+app.post('/login', userController.verifyUser, (req, res) => {
 
 })
 
