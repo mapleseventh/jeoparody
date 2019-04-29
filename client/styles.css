@@ -44,11 +44,12 @@ html {
     padding: 10px;
     width: 300px;
     border: solid 2px black;
+    border-bottom: solid 8px black;
     background-color: black;
 }
 
 .category-name {
-    font-size: 1.5em;
+    font-size: 2.5vw;
     height: 80px;
     text-align: center;
     margin: auto;
@@ -56,6 +57,7 @@ html {
     text-transform: uppercase;
     background-color: blue;
     padding: 15px;
+    padding-top: 15%;
     border-radius: 5px;
 }
 
@@ -63,7 +65,7 @@ html {
     padding: 10px;
     height: 80px;
     width: 100x;
-    margin: 20px;
+    margin-top: 20px;
     /* border: solid 2px black; */
     background-color: rgb(4, 4, 194);
     text-align: center;
@@ -71,7 +73,8 @@ html {
 
 .point-value {
     padding: 20;
-    font-size: 1.8em;
+    font-size: 2.5em;
+    text-shadow: 4px 5px black;
     vertical-align: middle;
     color: yellow;
 }
