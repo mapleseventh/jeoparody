@@ -15,7 +15,9 @@ const Column = (props) => {
       answer={current.answer}
       state={current.state}
       key={`${props.category.name}${i}`}
-
+      cardId={`${props.columnId}${i}`}
+      id={`${props.columnId}${i}`}
+      flipCard={props.flipCard}
     />
     cards.push(newCard);
   });
