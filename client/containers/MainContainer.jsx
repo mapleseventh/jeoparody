@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux';
 import ColumnComponent from '../components/ColumnComponent.jsx'
-import PlayerComonent from  '../components/PlayerComponent.jsx'
+import PlayerComonent from '../components/PlayerComponent.jsx'
 import * as actions from '../actions/actions';
 
 const mapStateToProps = (store) => ({
@@ -39,16 +39,16 @@ class MainContainer extends React.Component {
 
 
     render() {
-        // console.log(this.props.totalScore)
+        console.log(this.props.totalScore)
 
-       
+
 
         let questionData = this.props.questionData;
         let categories = [];
         let userInputClass = '';
         let currentPlayers;
         let playersArray;
-        
+
         if (this.props.currentUserBoard) { //Current user is the game board
             questionData.forEach((element, i) => {
                 // console.log(element);
@@ -56,8 +56,8 @@ class MainContainer extends React.Component {
                 categories.push(newColumn);
             });
 
-            if(this.props.gameLoopActive === false){
-                setInterval(this.props.getPlayerData,300);
+            if (this.props.gameLoopActive === false) {
+                setInterval(this.props.getPlayerData, 300);
                 this.props.setGameLoopTrue();
             }
 
@@ -66,12 +66,12 @@ class MainContainer extends React.Component {
             currentPlayers = this.props.currentPlayers
             currentPlayers.forEach(player => {
                 const newPlayer = <PlayerComonent
-                 name={player.name}
-                 buzzed={player.buzzed}
-                 points={player.points}
-                 key={player.name}
-                 />
-                 playersArray.push(newPlayer);
+                    name={player.name}
+                    buzzed={player.buzzed}
+                    points={player.points}
+                    key={player.name}
+                />
+                playersArray.push(newPlayer);
             });
 
 
@@ -86,7 +86,7 @@ class MainContainer extends React.Component {
                     <button onClick={this.props.toggleBoard}>Toggle Board</button>
                     <button onClick={this.props.getPlayerData}>Get Player Data</button>
                     <div id="playerColumn">
-                    <h3>Players:</h3>
+                        <h3>Players:</h3>
                         {playersArray}
                     </div>
                     <div className="column-container">
@@ -95,7 +95,7 @@ class MainContainer extends React.Component {
 
                     <div className='clue-display'>
                         What is the best game show ever?
-                </div>
+                    </div>
 
                     <form id='answer-form'
                         onSubmit={e => {
@@ -109,7 +109,7 @@ class MainContainer extends React.Component {
                     </form>
                 </div >
             )
-        } else {
+        } else {  //User is buzzer
             return (
                 <div>
                     <button onClick={this.props.toggleBoard}>Toggle Board</button>
@@ -118,16 +118,16 @@ class MainContainer extends React.Component {
                         e.preventDefault();
                         console.log(e.target.playerInput.value);
                         if (e.target.playerInput.value != "")
-                            this.props.pressBuzzer(e)
+                            this.props.pressBuzzer()
                     }} >
                         <input id="playerInput"
                             placeholder="Enter your name:"
                             onChange={this.props.inputUsername}
                             className={userInputClass}
-                            name='playerInput' 
-                            autoComplete="off" 
+                            name='playerInput'
+                            autoComplete="off"
                             type="text" />
-                        <input id="playerBuzzer" type="submit" value="BUZZ IN"/>
+                        <input id="playerBuzzer" type="submit" value="BUZZ IN" />
                     </form>
                 </div>
             )

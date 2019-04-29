@@ -195,25 +195,38 @@ const triviaReducer = (state = initialState, action) => {
         }
 
         case types.SET_GAMELOOP:
-        let gameLoopActive = true;
-        return {
-            ...state,
-            gameLoopActive
-        }
+            let gameLoopActive = true;
+            return {
+                ...state,
+                gameLoopActive
+            }
 
         case types.GET_PLAYER_DATA: {
             const currentPlayers = action.payload;
             //TODO add in check vs current players
             //current implmentation is causing constant state changes, I think
 
-            return {
-                ...state,
-                currentPlayers
+            const prevPlayers = state.currentPlayers;
+
+            const string1 = JSON.stringify(prevPlayers);
+            const string2 = JSON.stringify(currentPlayers);
+
+            if (string1 == string2) {
+                return state;
+            } else {
+                console.log(`Player State changed, update state`);
+                console.log(`${string1}`);
+                console.log(`${string2}`);
+                return {
+                    ...state,
+                    currentPlayers
+                }
             }
         }
 
         case types.INPUT_USERNAME:
-            const currentPlayer = (action.payload.target.value);
+            const currentPlayer = (action.payload);
+            
             return {
                 ...state,
                 currentPlayer

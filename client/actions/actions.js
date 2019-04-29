@@ -19,12 +19,13 @@ export const toggleBoard = () => ({
 
 export const inputUsername = (event) => ({
   type: types.INPUT_USERNAME,
-  payload: event
+  payload: event.target.value
 })
 
-export const pressBuzzer = (e) => (dispatch, getState) => {
+export const pressBuzzer = () => (dispatch, getState) => {
   let state = getState();
-  let currentPlayer = state.trivia.currentUser;
+  let currentPlayer = state.trivia.currentPlayer;
+  console.log('Current Player in state:',currentPlayer);
   let url = `/api/hitBuzzer?name=${currentPlayer}`;
   axios.get(url)
     .then(response => {
@@ -33,7 +34,7 @@ export const pressBuzzer = (e) => (dispatch, getState) => {
       console.log('Buzzer Data', data)
       dispatch({
         type: types.PRESS_BUZZER,
-        payload: e
+        payload: currentPlayer
       })
     })
 }
