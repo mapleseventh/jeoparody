@@ -242,6 +242,7 @@ const triviaReducer = (state = initialState, action) => {
 
         case types.GET_LOGIN_DATA: {
             //TODO check login data from server
+            console.log(`Login Data: ${action.payload}`);
             const loginData = action.payload;
             let currentPlayer = state.currentPlayer;
             let disableUserInput = state.disableUserInput;

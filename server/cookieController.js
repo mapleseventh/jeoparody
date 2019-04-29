@@ -1,11 +1,11 @@
 const pg = require('pg');
 const conString = "postgres://egpfdyzm:T39wuuQoQ9DtnGVbxJZKx5Slob_4qGEk@hansken.db.elephantsql.com:5432/egpfdyzm";
 const client = new pg.Client(conString);
-const cookieParser = require('cookie-parser');
 
 const cookieController = {};
 
 cookieController.setCookie = (req, res, next) => {
+  if(res.locals.err) return next();
   console.log("Set Cookie middleware initiated")
   let verifyQuery = `SELECT * FROM users WHERE username = '${req.body.username}' AND password = crypt('${req.body.password}', password)`
   client.connect((err) => {
@@ -17,19 +17,20 @@ cookieController.setCookie = (req, res, next) => {
         console.log("Success! Login Cookie established", req.body.username)
       }
       client.end();
-      next()
+      return next()
     });
   });
-  console.log("Before next in setCookie")
 };
 
 cookieController.verifyCookie = (req, res, next) => {
-  if(!req.cookies.loginCookie) {
-    res.send("")
+  if(!req.cookies) {
+    console.log("No Cookie found");
+    res.locals.data = "";
   } else {
-    res.send(req.cookies.loginCookie)
+    console.log(`Cookies Found: ${req.cookies}`);
+    res.locals.data = req.cookies.loginCookie;
   }
-  next()
+  return next();
 }
 
 // cookieController.setSSIDCookie = (req, res, next) => {
