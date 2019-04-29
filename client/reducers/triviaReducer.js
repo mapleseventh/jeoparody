@@ -17,6 +17,15 @@ const initialState = {
     totalScore: 0,
     currentQuestion: '',
     currentAnswer: '',
+    //multiplayer
+    currentUserBoard: false,
+    currentPlayer: '',
+    disableUserInput: false,
+    currentPlayers: [],
+    gameLoopActive: false,
+
+
+    //question/game data
     questionData:
         // Need to add value for player answers to each card object
         [
@@ -173,9 +182,61 @@ const initialState = {
 
 
 const triviaReducer = (state = initialState, action) => {
-    console.log(`Action: ${action.type}`);
 
     switch (action.type) {
+
+        case types.TOGGLE_BOARD: {
+            const currentUserBoard = !state.currentUserBoard;
+            console.log('toggle Board');
+            return {
+                ...state,
+                currentUserBoard
+            }
+        }
+
+        case types.SET_GAMELOOP:
+        let gameLoopActive = true;
+        return {
+            ...state,
+            gameLoopActive
+        }
+
+        case types.GET_PLAYER_DATA: {
+            const currentPlayers = action.payload;
+            //TODO add in check vs current players
+            //current implmentation is causing constant state changes, I think
+
+            return {
+                ...state,
+                currentPlayers
+            }
+        }
+
+        case types.INPUT_USERNAME:
+            const currentPlayer = (action.payload.target.value);
+            return {
+                ...state,
+                currentPlayer
+            }
+
+        case types.PRESS_BUZZER:
+            console.log("Buzzer pressed");
+            // TODO - disable input when username is set
+            // will be done by cookie / login soon
+            if (state.disableUserInput === false) {
+                const disableUserInput = true;
+                return {
+                    ...state,
+                    disableUserInput,
+                }
+
+            } else {  //User submitted
+
+            }
+
+            return state;
+
+
         case types.START_GAME:
 
             let questionData = state.questionData.slice();
@@ -192,11 +253,7 @@ const triviaReducer = (state = initialState, action) => {
 
         case types.SUBMIT_ANSWER:
             console.log('Answer Submitted');
-
             console.log(state.currentAnswer);
-
-
-
             return {
                 ...state,
                 currentAnswer: ''

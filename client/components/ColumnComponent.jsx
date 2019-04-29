@@ -3,7 +3,7 @@ import CardComponent from './CardComponent.jsx';
 
 const Column = (props) => {
 
-  console.log(props.category)
+  // console.log(props.category)
 
   const clues = props.category.clues;
   const cards = [];
