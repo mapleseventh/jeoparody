@@ -26,8 +26,13 @@ const mapDispatchToProps = (dispatch) => ({
     getPlayerData: () => dispatch(actions.getPlayerData()),
     clearBuzzers: () => dispatch(actions.clearBuzzers()),
     pressBuzzer: (event) => dispatch(actions.pressBuzzer(event)),
-    inputUsername: (event) => dispatch(actions.inputUsername(event)),
+    inputUser: (event) => dispatch(actions.inputUser(event)),
     setGameLoopTrue: (event) => dispatch(actions.setGameLoopTrue(event)),
+    inputUsername: (event) => dispatch(actions.inputUsername(event)),
+    inputPassword: (event) => dispatch(actions.inputPassword(event)),
+
+    getLoginData: () => dispatch(actions.getLoginData()),
+    submitLogin: () => dispatch(actions.submitLogin()),
 });
 
 
@@ -40,8 +45,11 @@ class MainContainer extends React.Component {
 
 
     render() {
-        console.log(this.props.totalScore)
 
+        //If we don't have a name for the player, querey the server if we have anything for them
+        if (this.props.currentPlayer === '') {
+            this.props.getLoginData();
+        }
 
 
         let questionData = this.props.questionData;
@@ -58,10 +66,10 @@ class MainContainer extends React.Component {
             });
 
             if (this.props.gameLoopActive === false) {
+
                 setInterval(this.props.getPlayerData, 300);
                 this.props.setGameLoopTrue();
             }
-
 
             playersArray = [];
             currentPlayers = this.props.currentPlayers
@@ -74,7 +82,6 @@ class MainContainer extends React.Component {
                 />
                 playersArray.push(newPlayer);
             });
-
 
         } else { //user is a player
             if (this.props.disableUserInput) {
@@ -114,7 +121,16 @@ class MainContainer extends React.Component {
             return (
                 <div>
                     <button onClick={this.props.toggleBoard}>Toggle Board</button>
-
+                    <form id="loginform" onSubmit={(e) => {
+                        e.preventDefault();
+                        console.log(e.target.username.value);
+                        if (e.target.username.value != "")
+                            this.props.submitLogin()
+                    }}>
+                        <input type="text" id="username" placeholder="Username" onChange={this.props.inputUsername} />
+                        <input type="text" id="password" placeholder="Password" onChange={this.props.inputPassword} />
+                        <input type="submit" />
+                    </form>
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         console.log(e.target.playerInput.value);
@@ -123,8 +139,9 @@ class MainContainer extends React.Component {
                     }} >
                         <input id="playerInput"
                             placeholder="Enter your name:"
-                            onChange={this.props.inputUsername}
+                            onChange={this.props.inputUser}
                             className={userInputClass}
+                            value={this.props.currentPlayer}
                             name='playerInput'
                             autoComplete="off"
                             type="text" />

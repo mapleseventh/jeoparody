@@ -14,9 +14,11 @@ import * as types from '../constants/actionTypes';
 
 const initialState = {
     username: '',
+    password: '',
     totalScore: 0,
     currentQuestion: '',
     currentAnswer: '',
+    curretPointValue: 50,
     //multiplayer
     currentUserBoard: false,
     currentPlayer: '',
@@ -224,7 +226,7 @@ const triviaReducer = (state = initialState, action) => {
             }
         }
 
-        case types.INPUT_USERNAME:
+        case types.INPUT_USER:
             const currentPlayer = (action.payload);
 
             return {
@@ -232,6 +234,48 @@ const triviaReducer = (state = initialState, action) => {
                 currentPlayer
             }
 
+        case types.GET_LOGIN_DATA: {
+            //TODO check login data from server
+            const loginData = action.payload;
+            let currentPlayer = state.currentPlayer;
+            let disableUserInput = state.disableUserInput;
+            if(loginData != ''){
+                currentPlayer = loginData
+                disableUserInput = true;
+            }
+            console.log(`Login Data: ${loginData}`);
+            return {
+                ...state,
+                currentPlayer,
+                disableUserInput
+            }
+        }
+
+        case types.INPUT_USERNAME:{
+            const username = action.payload;
+            return{
+                ...state,
+                username
+            }
+        }
+
+        case types.INPUT_PASSWORD:{
+            const password = action.payload;
+
+            return{
+                ...state,
+                password
+            }
+        }
+
+        case types.SUBMIT_LOGIN:{
+
+
+            return {
+                ...state,
+
+            }
+        }
 
         case types.CLEAR_BUZZER:
             console.log(`Clearing Buzzer State`);
@@ -285,6 +329,7 @@ const triviaReducer = (state = initialState, action) => {
                 currentAnswer
             }
         default:
+        console.log(`Default Reducer case hit for ${action.type}`);
             return state;
 
     }

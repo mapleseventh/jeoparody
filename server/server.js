@@ -93,19 +93,21 @@ app.get('/api/hitBuzzer', (req, res) => {
     console.log(`Buzzer Already presed by someone else`);
   }
   res.send("Got it")
-
-  // if (gameState.buzzerHit) {
-  //   res.send("Too Slow!!")
-  // } else {
-  //   gameState.buzzerHit = true;
-  //   res.send("YourAnswer??")
-  // }
-
 })
+
+//had dummy post /api/login and /api/getLoginData functions for testing here - needed for full functionality
 
 //pass in player and amount of points to give that player
 app.get('/api/givePoints', (req, res) => {
+  const name = req.query.name;
+  const points = req.query.points;
 
+  gameState.players.forEach(player => {
+    if (player.name === name) {
+      player.points += points;
+    }
+  });
+  res.send("Points Added")
 })
 
 app.get('/api/clearBuzzers', (req, res) => {
