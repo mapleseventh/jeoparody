@@ -115,6 +115,10 @@ html {
     border-width: 0px; 
 }
 
+#loginform{
+    float: right;
+}
+
 .disableUserInput{
     pointer-events: none;
 }

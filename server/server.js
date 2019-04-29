@@ -73,7 +73,7 @@ app.get('/api/hitBuzzer', cookieController.setCookie, (req, res) => {
   gameState.players.forEach(player => {
     if (player.name == input) {
       newPlayer = false;
-    } 
+    }
   })
 
   if (newPlayer) {
@@ -87,27 +87,43 @@ app.get('/api/hitBuzzer', cookieController.setCookie, (req, res) => {
     return res.send("new player logged")
   }
 
-  gameState.players.forEach(player => {
-    if (player.name == currentPlayer) {
-      player.buzzed = true;
-    } else {
-      player.buzzed = false;
-    }
-  })
+  if (gameState.buzzerHit == false) {
+    gameState.buzzerHit = true;
+    gameState.players.forEach(player => {
+      if (player.name == currentPlayer) {
+        player.buzzed = true;
+      } else {
+        player.buzzed = false;
+      }
+    })
+  } else {
+    console.log(`Buzzer Already presed by someone else`);
+  }
   res.send("Got it")
-
-  // if (gameState.buzzerHit) {
-  //   res.send("Too Slow!!")
-  // } else {
-  //   gameState.buzzerHit = true;
-  //   res.send("YourAnswer??")
-  // }
-
 })
 
-//pass in player and amount of points to give that player
-app.get('/api/givePoints',(req,res) => {
+//had dummy post /api/login and /api/getLoginData functions for testing here - needed for full functionality
 
+//pass in player and amount of points to give that player
+app.get('/api/givePoints', (req, res) => {
+  const name = req.query.name;
+  const points = req.query.points;
+  console.log(`Give ${name} ${points} points`);
+  gameState.players.forEach(player => {
+    if (player.name === name) {
+      player.points += parseInt(points);
+    }
+  });
+  res.send("Points Added")
+})
+
+app.get('/api/clearBuzzers', (req, res) => {
+  console.log("Clearing Buzzers");
+  gameState.buzzerHit = false;
+  gameState.players.forEach(player => {
+    player.buzzed = false;
+  });
+  res.send("Done");
 })
 
 server.listen(3000, () => {

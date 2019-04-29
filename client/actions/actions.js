@@ -17,15 +17,28 @@ export const toggleBoard = () => ({
   type: types.TOGGLE_BOARD
 })
 
-export const inputUsername = (event) => ({
-  type: types.INPUT_USERNAME,
+export const inputUser = (event) => ({
+  type: types.INPUT_USER,
   payload: event.target.value
 })
+
+export const clearBuzzers = () => (dispatch, getState) => {
+  const url = '/api/clearBuzzers'
+  axios.get(url)
+    .then(response => {
+      return response.data
+    }).then(data => {
+      console.log('Buzzer Data', data)
+      dispatch({
+        type: types.CLEAR_BUZZER,
+      })
+    })
+};
 
 export const pressBuzzer = () => (dispatch, getState) => {
   let state = getState();
   let currentPlayer = state.trivia.currentPlayer;
-  console.log('Current Player in state:',currentPlayer);
+  console.log('Current Player in state:', currentPlayer);
   let url = `/api/hitBuzzer?name=${currentPlayer}`;
   axios.get(url)
     .then(response => {
@@ -39,9 +52,87 @@ export const pressBuzzer = () => (dispatch, getState) => {
     })
 }
 
+export const awardPoints = () => (dispatch, getState) => {
+  const state = getState();
+
+  const currentPlayers = state.trivia.currentPlayers;
+  let buzzedPlayer = ''
+  currentPlayers.forEach(player => {
+      if(player.buzzed == true)
+        buzzedPlayer = player.name;
+  });
+
+  const currentValue = state.trivia.currentValue;
+  //TODO - error checking player name
+
+  if(buzzedPlayer == ''){
+    console.log(`No buzzed in player, cannot award points`);
+    return;
+  }
+
+  let url = `/api/givePoints?name=${buzzedPlayer}&points=${currentValue}`;
+  console.log(`API CAll: ${url}`);
+  axios.get(url)
+    .then(response => {
+      return response.data
+    }).then(data => {
+      console.log('Point Data', data)
+      dispatch({
+        type: types.AWARD_POINTS,
+      })
+    })
+}
+
+export const getLoginData = () => (dispatch, getState) => {
+  const url = '/api/getLoginData'
+  axios.get(url)
+    .then(response => {
+      return response.data
+    }).then(data => {
+      console.log('Buzzer Data', data)
+      dispatch({
+        type: types.GET_LOGIN_DATA,
+        payload: data
+      })
+    })
+}
+
+export const inputUsername = (event) => ({
+  type: types.INPUT_USERNAME,
+  payload: event.target.value
+})
+
+export const inputPassword = (event) => ({
+  type: types.INPUT_PASSWORD,
+  payload: event.target.value
+})
+
+export const submitLogin = () => (dispatch, getState) => {
+  const url = '/api/login'
+  const state = getState();
+  const body = {
+    username: state.trivia.username,
+    password: state.trivia.password
+  }
+  console.log(`Username: ${username} Pass:${password}`);
+  axios.post(url, body)
+    .then(response => {
+      return response.data
+    }).then(data => {
+      console.log('Buzzer Data', data)
+      dispatch({
+        type: types.GET_LOGIN_DATA,
+        payload: data
+      })
+    })
+}
+
 export const setGameLoopTrue = () => ({
   type: types.SET_GAMELOOP
 })
+
+// this is called in the game loop 
+// to keep game state updated with the server
 
 export const getPlayerData = (e) => (dispatch) => {
   const url = '/api/getplayers'
