@@ -54,18 +54,31 @@ export const pressBuzzer = () => (dispatch, getState) => {
 
 export const awardPoints = () => (dispatch, getState) => {
   const state = getState();
-  const currentPlayer = state.trivia.currentPlayer;
 
+  const currentPlayers = state.trivia.currentPlayers;
+  let buzzedPlayer = ''
+  currentPlayers.forEach(player => {
+      if(player.buzzed == true)
+        buzzedPlayer = player.name;
+  });
 
-  let url = `/api/givePoints?name=${currentPlayer}`;
+  const curretPointValue = state.trivia.curretPointValue;
+  //TODO - error checking player name
+
+  if(buzzedPlayer == ''){
+    console.log(`No buzzed in player, cannot award points`);
+    return;
+  }
+
+  let url = `/api/givePoints?name=${buzzedPlayer}&points=${curretPointValue}`;
+  console.log(`API CAll: ${url}`);
   axios.get(url)
     .then(response => {
       return response.data
     }).then(data => {
-      console.log('Buzzer Data', data)
+      console.log('Point Data', data)
       dispatch({
-        type: types.PRESS_BUZZER,
-        payload: currentPlayer
+        type: types.AWARD_POINTS,
       })
     })
 }
@@ -102,7 +115,7 @@ export const submitLogin = () => (dispatch, getState) => {
     password: state.trivia.password
   }
   console.log(`Username: ${username} Pass:${password}`);
-  axios.post(url,body)
+  axios.post(url, body)
     .then(response => {
       return response.data
     }).then(data => {

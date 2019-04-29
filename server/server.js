@@ -101,10 +101,10 @@ app.get('/api/hitBuzzer', (req, res) => {
 app.get('/api/givePoints', (req, res) => {
   const name = req.query.name;
   const points = req.query.points;
-
+  console.log(`Give ${name} ${points} points`);
   gameState.players.forEach(player => {
     if (player.name === name) {
-      player.points += points;
+      player.points += parseInt(points);
     }
   });
   res.send("Points Added")

@@ -212,13 +212,17 @@ const triviaReducer = (state = initialState, action) => {
 
             const string1 = JSON.stringify(prevPlayers);
             const string2 = JSON.stringify(currentPlayers);
-
             if (string1 == string2) {
                 return state;
             } else {
                 console.log(`Player State changed, update state`);
                 console.log(`${string1}`);
                 console.log(`${string2}`);
+                currentPlayers.forEach(player => {
+                    if (player.buzzed == true){
+                        console.log(`Setting Buzzed Player as: ${player.name}`);
+                    }
+                });
                 return {
                     ...state,
                     currentPlayers
@@ -239,7 +243,7 @@ const triviaReducer = (state = initialState, action) => {
             const loginData = action.payload;
             let currentPlayer = state.currentPlayer;
             let disableUserInput = state.disableUserInput;
-            if(loginData != ''){
+            if (loginData != '') {
                 currentPlayer = loginData
                 disableUserInput = true;
             }
@@ -251,24 +255,24 @@ const triviaReducer = (state = initialState, action) => {
             }
         }
 
-        case types.INPUT_USERNAME:{
+        case types.INPUT_USERNAME: {
             const username = action.payload;
-            return{
+            return {
                 ...state,
                 username
             }
         }
 
-        case types.INPUT_PASSWORD:{
+        case types.INPUT_PASSWORD: {
             const password = action.payload;
 
-            return{
+            return {
                 ...state,
                 password
             }
         }
 
-        case types.SUBMIT_LOGIN:{
+        case types.SUBMIT_LOGIN: {
 
 
             return {
@@ -280,8 +284,18 @@ const triviaReducer = (state = initialState, action) => {
         case types.CLEAR_BUZZER:
             console.log(`Clearing Buzzer State`);
             return {
-                ...state
+                ...state,
             }
+
+        case types.AWARD_POINTS: {
+            //Adding points handled on backend
+
+            return {
+                ...state,
+
+            }
+        }
+
         case types.PRESS_BUZZER:
             console.log("Buzzer pressed");
             // TODO - disable input when username is set
@@ -329,7 +343,7 @@ const triviaReducer = (state = initialState, action) => {
                 currentAnswer
             }
         default:
-        console.log(`Default Reducer case hit for ${action.type}`);
+            console.log(`Default Reducer case hit for ${action.type}`);
             return state;
 
     }
