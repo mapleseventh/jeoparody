@@ -5,7 +5,7 @@ const client = new pg.Client(conString);
 
 const userController = {}
 
-userController.verifyUser = (req, res, err) => {
+userController.verifyUser = (req, res, next) => {
   console.log(req.body)
   let verifyQuery = `SELECT * FROM users WHERE username = '${req.body.username}' AND password = crypt('${req.body.password}', password)`
   client.connect((err) => {
@@ -15,11 +15,13 @@ userController.verifyUser = (req, res, err) => {
       } else {
         console.log("Success! Welcome back", result.rows[0].username)
       }
-      client.end()
+      client.end();
+      next()
     })
   })
 }
 userController.createUser = (req, res, next) => {
+  console.log("create user middleware initiated");
   if (req.body.username && req.body.password) {
     console.log("Request body = ", req.body)
     let register = `INSERT INTO users (username, password) VALUES ('${req.body.username}', crypt('${req.body.password}', gen_salt('bf', 8)))`
@@ -28,14 +30,10 @@ userController.createUser = (req, res, next) => {
         if(err) console.error('cannot register new user', err);
         console.log('register success!', result.rows)
         client.end()
+        next()
       })
     })
   }
-  next()
 }
 
-
-userController.verifyUser = (req, res, next) => {
-  
-}
 module.exports = userController;

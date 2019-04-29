@@ -1,33 +1,54 @@
 const pg = require('pg');
 const conString = "postgres://egpfdyzm:T39wuuQoQ9DtnGVbxJZKx5Slob_4qGEk@hansken.db.elephantsql.com:5432/egpfdyzm";
 const client = new pg.Client(conString);
+const cookieParser = require('cookie-parser');
 
 const cookieController = {};
 
 cookieController.setCookie = (req, res, next) => {
-  let rand = Math.floor(Math.random()*1000)%99;
-  res.cookie('secret', rand);
-  console.log(rand)
-  return next();
-}
-
-cookieController.setSSIDCookie = (req, res, next) => {
-  if (err) console.err(err); 
-  let setSSID = `SELECT id FROM users WHERE username = '${req.body.username}' AND password = crypt('${req.body.password}', password)`
+  console.log("Set Cookie middleware initiated")
+  let verifyQuery = `SELECT * FROM users WHERE username = '${req.body.username}' AND password = crypt('${req.body.password}', password)`
   client.connect((err) => {
-    client.query(setSSID, (err, id) => {
+    client.query(verifyQuery, (err, result) => {
       if (err) {
-        console.error('cannot set SSID cookie');
+        console.error("Error, loginCookie not established");
       } else {
-        let uid = id.rows[0].id;
-        res.cookie('SSID', uid, {httpOnly: true });
-        console.log("Success! Welcome back", id.rows[0].id)
-        res.status();
+        res.cookie('loginCookie', req.body.username)
+        console.log("Success! Login Cookie established", req.body.username)
       }
-      client.end()
+      client.end();
+      next()
     });
   });
+  console.log("Before next in setCookie")
 };
+
+cookieController.verifyCookie = (req, res, next) => {
+  if(!req.cookies.loginCookie) {
+    res.send("")
+  } else {
+    res.send(req.cookies.loginCookie)
+  }
+  next()
+}
+
+// cookieController.setSSIDCookie = (req, res, next) => {
+//   if (err) console.err(err); 
+//   let setSSID = `SELECT id FROM users WHERE username = '${req.body.username}' AND password = crypt('${req.body.password}', password)`
+//   client.connect((err) => {
+//     client.query(setSSID, (err, id) => {
+//       if (err) {
+//         console.error('cannot set SSID cookie');
+//       } else {
+//         let uid = id.rows[0].id;
+//         res.cookie('SSID', uid, {httpOnly: true });
+//         console.log("Success! Welcome back", id.rows[0].id)
+//         res.send(id.rows[0].username);
+//       }
+//       client.end()
+//     });
+//   });
+// };
 
 
 module.exports = cookieController;
