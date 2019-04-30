@@ -390,12 +390,25 @@ const triviaReducer = (state = initialState, action) => {
             if (check) {
                 totalScore += state.currentValue;
                 document.getElementById(`${state.questionClue}`).style.background = 'green';
-                alert('Yeah! You got it!');
+                // alert('Yeah! You got it!');
+                document.querySelector('.clue-display').style.display = 'none';
+
             } else if (check === false) {
                 document.getElementById(`${state.questionClue}`).style.background = 'red';
-                alert(`NO! You didn't got it!  Expected: '${correctAnswer}'`);
+                // alert(`NO! You didn't got it!  Expected: '${correctAnswer}'`);
+                document.getElementById(`correctAnswerField`).innerHTML = correctAnswer;
+                document.getElementById(`correctAnswerField`).style.display = 'block';
+
+                let hideClue = function(){
+                    document.querySelector('.clue-display').style.display = 'none';
+                    document.getElementById(`correctAnswerField`).style.display = 'none';
+    
+                }
+                
+                setTimeout(hideClue,2300);
             }
-            document.querySelector('.clue-display').style.display = 'none';
+
+            
             
             return {
                 ...state,

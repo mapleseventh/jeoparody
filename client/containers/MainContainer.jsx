@@ -128,7 +128,7 @@ class MainContainer extends React.Component {
                             autoComplete='off'
                             value={this.props.currentAnswer} />
                         <button id="submit-answer" onClick={this.props.submitAnswer}>submit</button>
-                        <span id="answerField"></span>
+                        <span id="correctAnswerField"></span>
 
 
                     </div>
