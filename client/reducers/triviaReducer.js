@@ -184,6 +184,8 @@ const initialState = {
     }
 }
 
+// trying to make getting the right answer easier
+// could be better depending on how lax you want to be
 function massageAnswers(answer) {
     let retval = answer.toLowerCase();
     retval = retval.replace(/<.*>/g,'')
@@ -207,6 +209,7 @@ const triviaReducer = (state = initialState, action) => {
             }
         }
 
+        //bool to only turn the game loop on once
         case types.SET_GAMELOOP:
             let gameLoopActive = true;
             return {
@@ -214,6 +217,8 @@ const triviaReducer = (state = initialState, action) => {
                 gameLoopActive
             }
 
+            // this is the event loop, it runs every 300ms
+            // don't put console.logs in here unless you really need em
         case types.GET_PLAYER_DATA: {
             const currentPlayers = action.payload;
             //TODO add in check vs current players
@@ -243,7 +248,9 @@ const triviaReducer = (state = initialState, action) => {
 
         case types.INPUT_USER:
             let currentPlayer = (action.payload);
-            // console.log(`currentPlayer:${currentPlayer}`);
+
+            //"asdf" was my admin user - this was to prevent anyone from
+            // creating that user via the guest/buzzer login
             if (currentPlayer === "asdf") currentPlayer = "asdff"
             return {
                 ...state,
@@ -286,8 +293,7 @@ const triviaReducer = (state = initialState, action) => {
         }
 
         case types.SUBMIT_LOGIN: {
-
-
+            //Work done on back end, should probably put some error checking here
             return {
                 ...state,
 
@@ -295,7 +301,7 @@ const triviaReducer = (state = initialState, action) => {
         }
 
         case types.CREATE_USER: {
-            //logic mostly in back end
+            //Work done on back end, should probably put some error checking here
             return {
                 ...state
             }
@@ -410,13 +416,25 @@ const triviaReducer = (state = initialState, action) => {
             if (check) {
                 totalScore += state.currentValue;
                 document.getElementById(`${state.questionClue}`).style.background = 'green';
-                alert('Yeah! You got it!');
-            } else if(check === false){
-                let right = state.questionData[column].clues[card]['answer'];
+                // alert('Yeah! You got it!');
+                document.querySelector('.clue-display').style.display = 'none';
+
+            } else if (check === false) {
                 document.getElementById(`${state.questionClue}`).style.background = 'red';
-                alert(`NO! You didn't got it! \n The correct answer is: ${right}`);
+                // alert(`NO! You didn't got it!  Expected: '${correctAnswer}'`);
+                document.getElementById(`correctAnswerField`).innerHTML = correctAnswer;
+                document.getElementById(`correctAnswerField`).style.display = 'block';
+
+                let hideClue = function(){
+                    document.querySelector('.clue-display').style.display = 'none';
+                    document.getElementById(`correctAnswerField`).style.display = 'none';
+    
+                }
+                
+                setTimeout(hideClue,2300);
             }
-            document.querySelector('.clue-display').style.display = 'none';
+
+            
             
             return {
                 ...state,

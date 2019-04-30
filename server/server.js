@@ -15,11 +15,10 @@ const client = new pg.Client(conString);
 
 const gameState = {
   players: [],
-  current: null,
   buzzerHit: false,
 };
 
-
+//connect to SQL DB
 client.connect(function (err) {
   if (err) return console.error("Could not connect to postgres", err);
   console.log("Successful connection to elephantSQL");
@@ -31,8 +30,6 @@ client.connect(function (err) {
   });
 });
 
-// const cors = require('cors');
-// app.use(cors());
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
@@ -66,7 +63,8 @@ app.get('/api/getPlayers', (req, res) => {
   res.send(gameState.players);
 })
 
-// TODO - currentPlayer is only coming from buzzer query params
+// TODO - move user creation logic out of 'hitBuzzer' 
+// there is too much going on in this function currently. 
 app.get('/api/hitBuzzer', (req, res) => {
   let input = req.query.name;
   let currentPlayer = '';
