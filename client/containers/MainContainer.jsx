@@ -57,6 +57,7 @@ class MainContainer extends React.Component {
         let userInputClass = '';
         let currentPlayers;
         let playersArray;
+        let toggleBoardClass = 'hidden';
 
 
 
@@ -93,6 +94,11 @@ class MainContainer extends React.Component {
             if (this.props.disableUserInput) {
                 userInputClass = "disableUserInput"
             }
+            //only show toggle board for user asdf
+            if(this.props.currentPlayer == "asdf"){
+                toggleBoardClass = '';
+            }
+
         }
         if (this.props.currentUserBoard) {
             return (
@@ -127,7 +133,7 @@ class MainContainer extends React.Component {
         } else {  //User is buzzer
             return (
                 <div>
-                    <button onClick={this.props.toggleBoard}>Toggle Board</button>
+                    <button className={toggleBoardClass} onClick={this.props.toggleBoard}>Toggle Board</button>
                     <button className="createUserBtn" onClick={this.props.createUser}>Create User</button>
                     <form id="loginform" onSubmit={(e) => {
                         e.preventDefault();

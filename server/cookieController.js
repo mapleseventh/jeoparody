@@ -27,7 +27,6 @@ cookieController.verifyCookie = (req, res, next) => {
     console.log("No Cookie found");
     res.locals.data = "";
   } else {
-    console.log(`Cookies Found: ${req.cookies}`);
     res.locals.data = req.cookies.loginCookie;
   }
   return next();

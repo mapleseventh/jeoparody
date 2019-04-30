@@ -119,6 +119,10 @@ html {
     float: right;
 }
 
+.hidden{
+    display: none;
+}
+
 .createUserBtn{
     float: right;
 }
