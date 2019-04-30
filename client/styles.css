@@ -1,3 +1,169 @@
-html{
-    background-color: #0000b3;
+html {
+    background-color: teal;
+    font-family: Impact, Haettenschweiler, 'Arial Narrow Bold', sans-serif;
+    letter-spacing: 1px;
+}
+
+#answer-form{
+    margin: auto;  
+}
+
+#newGame {
+    padding: 30px;
+    background: yellow;
+    font-weight: bold;
+    font-size: 20;
+    border-radius: 5px
+}
+
+.boardControlButtons{
+    padding: 30px;
+    background: lightblue;
+    font-weight: bold;
+    font-size: 20;
+    border-radius: 5px
+}
+
+#answer-input{
+    width: 700px;
+    font-size: 1.5em;
+    padding: 10px;
+}
+#submit-answer{
+    padding: 10px;
+    color: yellow;
+    background-color: blue;
+}
+
+#correctAnswerField{
+    font-size: 3em;
+    color: red;
+}
+
+.clue-display {
+    display:none;
+    height: 500px;
+    width: 800px;
+    background-color: lightskyblue;
+    position: fixed;
+    top: 20%;
+    left: 20%;
+    font-size: 3em;
+    padding: 30px;
+}
+
+.main-container-div {
+
+}
+
+#totalScore {
+    color: white;
+ font-size: 70px;
+ text-align: center
+}
+
+.column-container {
+    display: flex;
+    flex-direction: row;
+}
+
+.column-component-div {
+    padding: 10px;
+    width: 300px;
+    border: solid 2px black;
+    border-bottom: solid 8px black;
+    background-color: black;
+}
+
+.category-name {
+    font-size: 2.5vw;
+    height: 80px;
+    text-align: center;
+    margin: auto;
+    color: white;
+    text-transform: uppercase;
+    background-color: blue;
+    padding: 15px;
+    padding-top: 15%;
+    border-radius: 5px;
+}
+
+.card-component-div {
+    padding: 10px;
+    height: 80px;
+    width: 100x;
+    margin-top: 20px;
+    /* border: solid 2px black; */
+    background-color: rgb(4, 4, 194);
+    text-align: center;
+}
+
+.point-value {
+    padding: 20;
+    font-size: 2.5em;
+    text-shadow: 4px 5px black;
+    vertical-align: middle;
+    color: yellow;
+}
+
+
+/* Player Styles */
+#playerInput{
+    width: 100%;
+    display: block;
+    height: 20%;
+    font-size: 4.5em;
+    text-align: center;
+}
+
+#playerBuzzer{
+    margin-left: 10%;
+    width: 80%;
+    height: 60%;
+    font-size: 7em;
+    color: white;
+    font-weight: 800;
+    background-color: red;
+    border-radius: 250px;
+    border-width: 0px; 
+}
+
+#loginform{
+    float: right;
+}
+
+.hidden{
+    display: none;
+}
+
+.createUserBtn,.toggleBoard{
+    float: right;
+}
+
+.disableUserInput{
+    pointer-events: none;
+}
+
+#playerColumn{
+    width: 20%;
+    float: left;
+    height: 1200px;
+    background-color: black;
+    color: white;
+}
+
+.player-component-div{
+    padding: 10px;
+    height: 120px;
+    width: 100x;
+    margin: 20px;
+    font-size: 2em;
+    background-color: rgb(4, 4, 194);
+    text-align: center;
+    color:white;
+    border-radius: 40px;
+}
+
+.buzzed{
+    background-color: red;
 }
