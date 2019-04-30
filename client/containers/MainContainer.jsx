@@ -58,7 +58,7 @@ class MainContainer extends React.Component {
         let currentPlayers;
         let playersArray;
         let toggleBoardClass = 'hidden';
-
+        let hideLoginClass = 'hidden';
 
 
         if (this.props.currentUserBoard) { //Current user is the game board
@@ -95,14 +95,16 @@ class MainContainer extends React.Component {
                 userInputClass = "disableUserInput"
             }
             //only show toggle board for user asdf
-            if(this.props.currentPlayer == "asdf"){
+            if (this.props.currentPlayer == "asdf") {
                 toggleBoardClass = '';
             }
+            if (this.props.currentPlayer == '')
+                hideLoginClass = ''
 
         }
         if (this.props.currentUserBoard) {
             return (
-            <div className='main-container-div'>
+                <div className='main-container-div'>
                     <button id='newGame' onClick={this.props.startGame}>New Game</button>
                     <button onClick={this.props.toggleBoard}>Toggle Board</button>
                     <button onClick={this.props.awardPoints}>Award Points</button>
@@ -113,29 +115,29 @@ class MainContainer extends React.Component {
                         {playersArray}
                     </div>
 
-                <h1 id="totalScore">Total Score: {this.props.totalScore}</h1>
-                <div className="column-container">
-                    {categories}   
-                </div>
+                    <h1 id="totalScore">Total Score: {this.props.totalScore}</h1>
+                    <div className="column-container">
+                        {categories}
+                    </div>
 
-                <div className='clue-display'>
-                    <div id="question">This is where the question will go</div>
+                    <div className='clue-display'>
+                        <div id="question">This is where the question will go</div>
                         <input id="answer-input"
                             onChange={e => this.props.inputAnswer(e.target.value)}
                             value={this.props.currentAnswer} />
                         <button id="submit-answer" onClick={this.props.submitAnswer}>submit</button>
-                    
 
-                </div>
 
-            </div >
+                    </div>
+
+                </div >
             )
         } else {  //User is buzzer
             return (
                 <div>
                     <button className={toggleBoardClass} onClick={this.props.toggleBoard}>Toggle Board</button>
-                    <button className="createUserBtn" onClick={this.props.createUser}>Create User</button>
-                    <form id="loginform" onSubmit={(e) => {
+                    <button className={`createUserBtn ${hideLoginClass}`} onClick={this.props.createUser}>Create User</button>
+                    <form className={hideLoginClass} id="loginform" onSubmit={(e) => {
                         e.preventDefault();
                         console.log(e.target.username.value);
                         if (e.target.username.value != "")
@@ -143,12 +145,13 @@ class MainContainer extends React.Component {
                     }}>
                         <input type="text" id="username" placeholder="Username" onChange={this.props.inputUsername} />
                         <input type="text" id="password" placeholder="Password" onChange={this.props.inputPassword} />
-                        <input type="submit" value="Login"/>
+                        <input type="submit" value="Login" />
                     </form>
                     <form onSubmit={(e) => {
                         e.preventDefault();
                         console.log(e.target.playerInput.value);
-                        if (e.target.playerInput.value != "")
+                        const input = e.target.playerInput.value;
+                        if (input != "" )
                             this.props.pressBuzzer()
                     }} >
                         <input id="playerInput"

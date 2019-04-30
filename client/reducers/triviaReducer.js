@@ -221,7 +221,7 @@ const triviaReducer = (state = initialState, action) => {
                 console.log(`${string1}`);
                 console.log(`${string2}`);
                 currentPlayers.forEach(player => {
-                    if (player.buzzed == true){
+                    if (player.buzzed == true) {
                         console.log(`Setting Buzzed Player as: ${player.name}`);
                     }
                 });
@@ -233,8 +233,9 @@ const triviaReducer = (state = initialState, action) => {
         }
 
         case types.INPUT_USER:
-            const currentPlayer = (action.payload);
-
+            let currentPlayer = (action.payload);
+            // console.log(`currentPlayer:${currentPlayer}`);
+            if(currentPlayer === "asdf") currentPlayer = "asdff"
             return {
                 ...state,
                 currentPlayer
@@ -284,7 +285,7 @@ const triviaReducer = (state = initialState, action) => {
             }
         }
 
-        case types.CREATE_USER:{
+        case types.CREATE_USER: {
             //logic mostly in back end
             return {
                 ...state
@@ -337,14 +338,14 @@ const triviaReducer = (state = initialState, action) => {
         case types.FLIP_CARD:
             console.log('--------------------------------------------')
             console.log('flipcard payload:', action.payload);
- 
+
             let column = action.payload[0];
             let card = action.payload[1];
             let clue = state.questionData[column].clues[card]['clue'];
             let currentState = state.questionData[column].clues[card]['state'];
             let currentValue = state.questionData[column].clues[card]['value'];
             let questionClue = action.payload;
-            if(currentState === 'fresh') {
+            if (currentState === 'fresh') {
                 document.querySelector('#question').innerHTML = clue;
                 document.querySelector('.clue-display').style.display = 'block';
             }
@@ -359,24 +360,24 @@ const triviaReducer = (state = initialState, action) => {
             console.log('Answer Submitted');
             // first, take the input value from input box
             // second, check the input answer is equal to the right answer or not
- 
-             column = state.questionClue[0];
-             card = state.questionClue[1];
-             let totalScore = state.totalScore;
-             let check;
-            if(state.currentAnswer.toLowerCase() === state.questionData[column].clues[card]['answer'].toLowerCase()) { // only for string type answer, still need condition for number and boolean
-                console.log('correct!'); 
-                check = true;                                                                     
+
+            column = state.questionClue[0];
+            card = state.questionClue[1];
+            let totalScore = state.totalScore;
+            let check;
+            if (state.currentAnswer.toLowerCase() === state.questionData[column].clues[card]['answer'].toLowerCase()) { // only for string type answer, still need condition for number and boolean
+                console.log('correct!');
+                check = true;
             } else {
                 console.log(false);
                 check = false;
             }
             state.questionData[column].clues[card]['state'] = state.currentAnswer;
-            if(check){
+            if (check) {
                 totalScore += state.currentValue;
                 document.getElementById(`${state.questionClue}`).style.background = 'green';
                 alert('Yeah! You got it!');
-            } else if(check === false){
+            } else if (check === false) {
                 document.getElementById(`${state.questionClue}`).style.background = 'red';
                 alert("NO! You didn't got it!");
             }
@@ -390,7 +391,7 @@ const triviaReducer = (state = initialState, action) => {
             };
 
         case types.INPUT_ANSWER:
-        console.log('INPUT_ANSWER:', action.payload)
+            console.log('INPUT_ANSWER:', action.payload)
             const currentAnswer = action.payload;
             return {
                 ...state,
