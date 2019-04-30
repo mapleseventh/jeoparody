@@ -106,26 +106,29 @@ class MainContainer extends React.Component {
             return (
                 <div className='main-container-div'>
                     <button id='newGame' onClick={this.props.startGame}>New Game</button>
-                    <button onClick={this.props.toggleBoard}>Toggle Board</button>
-                    <button onClick={this.props.awardPoints}>Award Points</button>
-                    <button onClick={this.props.clearBuzzers}>Clear Buzzers</button>
+                    <button className="toggleBoard" onClick={this.props.toggleBoard}>Toggle Board</button>
+                    <button className="boardControlButtons" onClick={this.props.awardPoints}>Award Points</button>
+                    <button className="boardControlButtons" onClick={this.props.clearBuzzers}>Clear Buzzers</button>
 
                     <div id="playerColumn">
                         <h3>Players:</h3>
                         {playersArray}
                     </div>
 
-                    <h1 id="totalScore">Total Score: {this.props.totalScore}</h1>
+                    {/* <h1 id="totalScore">Total Score: {this.props.totalScore}</h1> */}
                     <div className="column-container">
                         {categories}
                     </div>
 
                     <div className='clue-display'>
                         <div id="question">This is where the question will go</div>
-                        <input id="answer-input"
+                        <br></br>
+                        What/Where/Who is:<input id="answer-input"
                             onChange={e => this.props.inputAnswer(e.target.value)}
+                            autoComplete='off'
                             value={this.props.currentAnswer} />
                         <button id="submit-answer" onClick={this.props.submitAnswer}>submit</button>
+                        <span id="answerField"></span>
 
 
                     </div>

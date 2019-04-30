@@ -184,6 +184,15 @@ const initialState = {
     }
 }
 
+function massageAnswers(answer) {
+    let retval = answer.toLowerCase();
+    retval = retval.replace(/<.*>/g,'')
+    retval = retval.replace(/ /g,'');
+    console.log(`Massaged answer:${retval}`);
+    return retval;
+}
+
+
 
 const triviaReducer = (state = initialState, action) => {
 
@@ -235,7 +244,7 @@ const triviaReducer = (state = initialState, action) => {
         case types.INPUT_USER:
             let currentPlayer = (action.payload);
             // console.log(`currentPlayer:${currentPlayer}`);
-            if(currentPlayer === "asdf") currentPlayer = "asdff"
+            if (currentPlayer === "asdf") currentPlayer = "asdff"
             return {
                 ...state,
                 currentPlayer
@@ -365,7 +374,12 @@ const triviaReducer = (state = initialState, action) => {
             card = state.questionClue[1];
             let totalScore = state.totalScore;
             let check;
-            if (state.currentAnswer.toLowerCase() === state.questionData[column].clues[card]['answer'].toLowerCase()) { // only for string type answer, still need condition for number and boolean
+            let givenAnswer = state.currentAnswer;
+            let correctAnswer = state.questionData[column].clues[card]['answer'];
+
+            let givenMassaged = massageAnswers(givenAnswer);
+            let correctMassaged = massageAnswers(correctAnswer)
+            if (givenMassaged === correctMassaged) { // only for string type answer, still need condition for number and boolean
                 console.log('correct!');
                 check = true;
             } else {
@@ -379,10 +393,10 @@ const triviaReducer = (state = initialState, action) => {
                 alert('Yeah! You got it!');
             } else if (check === false) {
                 document.getElementById(`${state.questionClue}`).style.background = 'red';
-                alert("NO! You didn't got it!");
+                alert(`NO! You didn't got it!  Expected: '${correctAnswer}'`);
             }
             document.querySelector('.clue-display').style.display = 'none';
-
+            
             return {
                 ...state,
                 currentAnswer: '',
@@ -391,7 +405,7 @@ const triviaReducer = (state = initialState, action) => {
             };
 
         case types.INPUT_ANSWER:
-            console.log('INPUT_ANSWER:', action.payload)
+            // console.log('INPUT_ANSWER:', action.payload)
             const currentAnswer = action.payload;
             return {
                 ...state,
