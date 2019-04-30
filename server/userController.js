@@ -5,32 +5,49 @@ const client = new pg.Client(conString);
 
 const userController = {}
 
-userController.getUser = (req, response) => {
+userController.verifyUser = (req, res, next) => {
+  console.log(`Trying to verify user`);
   console.log(req.body)
-  client.query('SELECT * FROM users WHERE username = "Jason"', (err, results) => {
-    if (err) console.error(err);
-    console.log(results)
-    response.status(200).json(results)
-    
+  let retvalue = ''
+  let verifyQuery = `SELECT * FROM users WHERE username = '${req.body.username}' AND password = crypt('${req.body.password}', password)`
+  client.connect((err) => {
+    client.query(verifyQuery, (err, result) => {
+      if (err) {
+        console.error('cannot verify user');
+        res.locals.err = 'cannoy verify user'
+      } else {
+        if (result.rows[0] !== undefined) {
+          console.log("Success! Welcome back", result.rows[0].username)
+          retvalue = result.rows[0].username;
+        } else {
+          console.log(`Invalid Username/Password`);
+          res.locals.err = 'Invalid username/password'
+
+          res.status(444)
+        }
+      }
+
+      // client.end();
+      res.locals.data = retvalue;
+      return next();
+    })
   })
 }
+
 userController.createUser = (req, res, next) => {
+  console.log("create user middleware initiated");
   if (req.body.username && req.body.password) {
     console.log("Request body = ", req.body)
-    let register = `INSERT INTO users (username, password) VALUES ('${req.body.username}', crypt('${req.body.password}', gen_salt('bf')))`
+    let register = `INSERT INTO users (username, password) VALUES ('${req.body.username}', crypt('${req.body.password}', gen_salt('bf', 8)))`
     client.connect((err) => {
       client.query(register, (err, result) => {
-        if(err) console.error('cannot register new user', err);
-        console.log('register success!', result)
+        if (err) console.error('cannot register new user', err);
+        console.log('register success!', result.rows)
         client.end()
+        next()
       })
     })
   }
-  next()
 }
 
-
-userController.verifyUser = (req, res, next) => {
-  
-}
 module.exports = userController;
