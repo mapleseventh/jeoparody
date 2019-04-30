@@ -36,18 +36,24 @@ client.connect(function (err) {
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
-
+app.use(cookieParser());
 
 app.get('/api/getLoginData', cookieController.verifyCookie, (req, res) => {
-  console.log("Is this route getting hit")
+  console.log("End of getLoginData")
+  res.send(res.locals.data);
 });
 
 app.post('/api/signup', userController.createUser, cookieController.setCookie, (req, res) => {
   res.end()
 });
 
-app.post('/api/login', userController.verifyUser, (req, res) => {
-
+app.post('/api/login', userController.verifyUser,cookieController.setCookie, (req, res) => {
+  if(res.locals.err){
+    console.log(`ERROR: ${res.locals.err}`);
+    res.status(444).send('') //ui expects blank for invalid/error
+  } else {
+    res.send(res.locals.data);
+  }
 })
 
 app.post('/game', gameController.saveGame, (req, res) => {
@@ -61,7 +67,7 @@ app.get('/api/getPlayers', (req, res) => {
 })
 
 // TODO - currentPlayer is only coming from buzzer query params
-app.get('/api/hitBuzzer', cookieController.setCookie, (req, res) => {
+app.get('/api/hitBuzzer', (req, res) => {
   let input = req.query.name;
   let currentPlayer = '';
   console.log(`User: ${input} buzzed in`);

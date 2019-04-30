@@ -97,6 +97,25 @@ export const getLoginData = () => (dispatch, getState) => {
     })
 }
 
+export const createUser = () => (dispatch,getState) => {
+  const state = getState();
+  const body = {
+    username: state.trivia.username,
+    password: state.trivia.password
+  }
+  const url = "/api/signup"
+  axios.post(url, body)
+  .then(response => {
+    return response.data
+  }).then(data => {
+    console.log('New User Data', data)
+    dispatch({
+      type: types.CREATE_USER,
+      payload: data
+    })
+  })
+}
+
 export const inputUsername = (event) => ({
   type: types.INPUT_USERNAME,
   payload: event.target.value
