@@ -26,4 +26,5 @@ Biggest suggestions would be:
 * Feed back on phone/buzzer client when they "Win" the buzz-off.
 * Implmennt game history feature (DB is prepped for single player version, won't be much to modify the multi player)
 * better answer matching - look into fuzzy matching
+* There's a issue with login work flow, probably just needs error handling
 
