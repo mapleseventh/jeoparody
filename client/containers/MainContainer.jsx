@@ -51,7 +51,6 @@ class MainContainer extends React.Component {
             this.props.getLoginData();
         }
 
-
         let questionData = this.props.questionData;
         let categories = [];
         let userInputClass = '';
@@ -60,7 +59,6 @@ class MainContainer extends React.Component {
         let toggleBoardClass = 'hidden';
         let hideLoginClass = 'hidden';
 
-
         if (this.props.currentUserBoard) { //Current user is the game board
             // questionData.forEach((element, i) => {
             //     // console.log(element);
@@ -68,7 +66,12 @@ class MainContainer extends React.Component {
             //     categories.push(newColumn);
             // });
             questionData.forEach((category, i) => {
-                const newColumn = <ColumnComponent flipCard={this.props.flipCard} columnId={i} category={category} key={category.name} />
+                const newColumn = <ColumnComponent 
+                flipCard={this.props.flipCard} 
+                columnId={i} 
+                category={category} 
+                key={category.name} 
+                />
                 categories.push(newColumn);
             });
 
@@ -100,8 +103,11 @@ class MainContainer extends React.Component {
             }
             if (this.props.currentPlayer == '')
                 hideLoginClass = ''
-
         }
+
+        // For two different returns based on condition, you guys can potentially work on refactoring 
+        // the codes and put them into two separate different react components files
+        // that would make the mainContainer codes much more readable.
         if (this.props.currentUserBoard) {
             return (
                 <div className='main-container-div'>
@@ -129,8 +135,6 @@ class MainContainer extends React.Component {
                             value={this.props.currentAnswer} />
                         <button id="submit-answer" onClick={this.props.submitAnswer}>submit</button>
                         <span id="answerField"></span>
-
-
                     </div>
 
                 </div >
