@@ -34,32 +34,32 @@ const initialState = {
         // Need to add value for player answers to each card object
         [
             {
-                name: "School Mottos",
+                name: "Codesmith Trivia",
                 clues: [
                     {
-                        clue: "Many schools use this motto from genesis, gods first spoken comsdmand",
-                        answer: "Let there be light",
+                        clue: "What is the most common name at Codemsith?",
+                        answer: "sam",
                         state: "fresh",
                         value: 100
                     },
                     {
-                        clue: "Many schools use this motto from genesis, gods first spoken command",
-                        answer: "Let there be light",
+                        clue: "What is the most common breakfast item eaten at Codemsith?",
+                        answer: "bagels",
                         state: "fresh",
                         value: 200
                     }, {
-                        clue: "Many schools use this motto from genesis, gods first spoken command",
-                        answer: "Let there be light",
+                        clue: "Who is the pull -up champ at Codemsith?",
+                        answer: "Sam Ryoo",
                         state: "fresh",
                         value: 300
                     }, {
-                        clue: "Many schools use this motto from genesis, gods first spoken command",
-                        answer: "Let there be light",
+                        clue: "Who is the biggest Mike in Cohort 28?",
+                        answer: "little Mike",
                         state: "fresh",
                         value: 400
                     }, {
-                        clue: "Many schools use this motto from genesis, gods first spoken command",
-                        answer: "Let there be light",
+                        clue: "Solve this riddle: When I am wet, I am alive. When I am dry, I am tossed away. I persist on tables, walls and doors",
+                        answer: "dry erase marker",
                         state: "fresh",
                         value: 500
                     },
@@ -70,7 +70,7 @@ const initialState = {
                 clues: [
                     {
                         clue: "The University of Brazil, the country's oldest, wasn't founded until this century",
-                        answer: "20th century",
+                        answer: "20th",
                         state: "fresh",
                         value: 100
                     },
@@ -98,7 +98,7 @@ const initialState = {
                 ]
             },
             {
-                name: "eddie murphy movies",
+                name: "Eddie Murphy Movies",
                 clues: [
                     {
                         clue: "Art Buchwald was awarded original story credit for this film in which Eddie played an African prince",
@@ -133,29 +133,29 @@ const initialState = {
                 name: "Potent Potables",
                 clues: [
                     {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "Varieties of this brand of scotch include Red, Black, Gold & Blue Label",
+                        answer: "Johnny Walker",
                         state: "fresh",
                         value: 100
                     },
                     {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "It's the Spanish name for a popular party drink made with red wine & fruit juices",
+                        answer: "Sangria",
                         state: "fresh",
                         value: 200
                     }, {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "This rum maker's website urges you to 'Drink responsibly--captain's orders!'",
+                        answer: "Captain Morgan",
                         state: "fresh",
-                        value: 300
+                        value: 200
                     }, {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "In its basic form, this cocktail is just rum, lime juice & sugar shaken over ice",
+                        answer: "A Daiquiri",
                         state: "fresh",
                         value: 400
                     }, {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "The 'original melon liqueur' from Suntory; it'll turn you green with envy",
+                        answer: "Midori",
                         state: "fresh",
                         value: 500
                     },
@@ -335,13 +335,33 @@ const triviaReducer = (state = initialState, action) => {
 
 
         case types.START_GAME:
+            
 
+            let newCat = {name:'', clues:[]};
+            let apiData = action.payload;
+
+            newCat['name'] = apiData[0].category.title;
+            for(let i = 0; i < 5; i++){
+                let point = (i+1)*100;
+                newCat.clues.push({
+                    clue: apiData[i]['question'],
+                    answer: apiData[i]['answer'],
+                    state: 'fresh',
+                    value: point
+                })
+            }
+            console.log('new column',newCat);
             let questionData = state.questionData.slice();
-            questionData = action.payload;
-            console.log('this is inside triviaReducer:  ' + questionData)
+            if(state.questionData.length === 4) {
+                questionData = [];
+                totalScore = 0;
+            }
+            questionData.push(newCat);
+            console.log('this is inside triviaReducer:  ', questionData)
             return {
                 ...state,
-                questionData
+                questionData,
+                totalScore
             }
 
         case types.FLIP_CARD:
@@ -432,3 +452,136 @@ const triviaReducer = (state = initialState, action) => {
 };
 
 export default triviaReducer;
+
+
+
+
+// test Data
+// {
+//     name: "School Mottos",
+//     clues: [
+//         {
+//             clue: "Many schools use this motto from genesis, gods first spoken comsdmand",
+//             answer: "Let there be light",
+//             state: "fresh",
+//             value: 100
+//         },
+//         {
+//             clue: "Many schools use this motto from genesis, gods first spoken command",
+//             answer: "Let there be light",
+//             state: "fresh",
+//             value: 200
+//         }, {
+//             clue: "Many schools use this motto from genesis, gods first spoken command",
+//             answer: "Let there be light",
+//             state: "fresh",
+//             value: 300
+//         }, {
+//             clue: "Many schools use this motto from genesis, gods first spoken command",
+//             answer: "Let there be light",
+//             state: "fresh",
+//             value: 400
+//         }, {
+//             clue: "Many schools use this motto from genesis, gods first spoken command",
+//             answer: "Let there be light",
+//             state: "fresh",
+//             value: 500
+//         },
+//     ]
+// },
+// {
+//     name: "Brazillian",
+//     clues: [
+//         {
+//             clue: "The University of Brazil, the country's oldest, wasn't founded until this century",
+//             answer: "20th century",
+//             state: "fresh",
+//             value: 100
+//         },
+//         {
+//             clue: "The layout of this, the capital, resembles a jet airliner",
+//             answer: "brasillia",
+//             state: "fresh",
+//             value: 200
+//         }, {
+//             clue: "1985 film set in Brazil that featured the fierce people, the invisible people, & the bat people",
+//             answer: "The Emerald Forest",
+//             state: "fresh",
+//             value: 300
+//         }, {
+//             clue: "This democratic privilege is compulsory for all Brazilians who are literate & between the ages of 18 & 65",
+//             answer: "Voting",
+//             state: "fresh",
+//             value: 400
+//         }, {
+//             clue: "It got its name after a Spanish explorer reported being attacked by female warriors there",
+//             answer: "Amazon River",
+//             state: "fresh",
+//             value: 500
+//         },
+//     ]
+// },
+// {
+//     name: "eddie murphy movies",
+//     clues: [
+//         {
+//             clue: "Art Buchwald was awarded original story credit for this film in which Eddie played an African prince",
+//             answer: "Coming to America",
+//             state: "fresh",
+//             value: 100
+//         },
+//         {
+//             clue: "Axel Foley was a cop on this midwestern city's payroll",
+//             answer: "Detroit",
+//             state: "fresh",
+//             value: 200
+//         }, {
+//             clue: "1990 sequel to his 1982 \"48HRS",
+//             answer: "Another 48hours",
+//             state: "fresh",
+//             value: 300
+//         }, {
+//             clue: "He played the man with whom Eddie Murphy traded places in \"Trading Places\"",
+//             answer: "Dan Ackroy",
+//             state: "fresh",
+//             value: 400
+//         }, {
+//             clue: "Who did eddie play in the barber shop in coming to ameria",
+//             answer: "Everyone",
+//             state: "fresh",
+//             value: 500
+//         },
+//     ]
+// },
+// {
+//     name: "Potent Potables",
+//     clues: [
+//         {
+//             clue: "Helllo World....I'm getting lazy",
+//             answer: "Helllo World....I'm getting lazy",
+//             state: "fresh",
+//             value: 100
+//         },
+//         {
+//             clue: "Helllo World....I'm getting lazy",
+//             answer: "Helllo World....I'm getting lazy",
+//             state: "fresh",
+//             value: 200
+//         }, {
+//             clue: "Helllo World....I'm getting lazy",
+//             answer: "Helllo World....I'm getting lazy",
+//             state: "fresh",
+//             value: 300
+//         }, {
+//             clue: "Helllo World....I'm getting lazy",
+//             answer: "Helllo World....I'm getting lazy",
+//             state: "fresh",
+//             value: 400
+//         }, {
+//             clue: "Helllo World....I'm getting lazy",
+//             answer: "Helllo World....I'm getting lazy",
+//             state: "fresh",
+//             value: 500
+//         },
+//     ]
+// }
