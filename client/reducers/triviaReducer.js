@@ -34,32 +34,32 @@ const initialState = {
         // Need to add value for player answers to each card object
         [
             {
-                name: "School Mottos",
+                name: "Codesmith Trivia",
                 clues: [
                     {
-                        clue: "Many schools use this motto from genesis, gods first spoken comsdmand",
-                        answer: "Let there be light",
+                        clue: "What is the most common name at Codemsith?",
+                        answer: "sam",
                         state: "fresh",
                         value: 100
                     },
                     {
-                        clue: "Many schools use this motto from genesis, gods first spoken command",
-                        answer: "Let there be light",
+                        clue: "What is the most common breakfast item eaten at Codemsith?",
+                        answer: "bagels",
                         state: "fresh",
                         value: 200
                     }, {
-                        clue: "Many schools use this motto from genesis, gods first spoken command",
-                        answer: "Let there be light",
+                        clue: "Who is the pull -up champ at Codemsith?",
+                        answer: "Sam Ryoo",
                         state: "fresh",
                         value: 300
                     }, {
-                        clue: "Many schools use this motto from genesis, gods first spoken command",
-                        answer: "Let there be light",
+                        clue: "Who is the biggest Mike in Cohort 28?",
+                        answer: "little Mike",
                         state: "fresh",
                         value: 400
                     }, {
-                        clue: "Many schools use this motto from genesis, gods first spoken command",
-                        answer: "Let there be light",
+                        clue: "Solve this riddle: When I am wet, I am alive. When I am dry, I am tossed away. I persist on tables, walls and doors",
+                        answer: "dry erase marker",
                         state: "fresh",
                         value: 500
                     },
@@ -70,7 +70,7 @@ const initialState = {
                 clues: [
                     {
                         clue: "The University of Brazil, the country's oldest, wasn't founded until this century",
-                        answer: "20th century",
+                        answer: "20th",
                         state: "fresh",
                         value: 100
                     },
@@ -98,7 +98,7 @@ const initialState = {
                 ]
             },
             {
-                name: "eddie murphy movies",
+                name: "Eddie Murphy Movies",
                 clues: [
                     {
                         clue: "Art Buchwald was awarded original story credit for this film in which Eddie played an African prince",
@@ -133,29 +133,29 @@ const initialState = {
                 name: "Potent Potables",
                 clues: [
                     {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "Varieties of this brand of scotch include Red, Black, Gold & Blue Label",
+                        answer: "Johnny Walker",
                         state: "fresh",
                         value: 100
                     },
                     {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "It's the Spanish name for a popular party drink made with red wine & fruit juices",
+                        answer: "Sangria",
                         state: "fresh",
                         value: 200
                     }, {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "This rum maker's website urges you to 'Drink responsibly--captain's orders!'",
+                        answer: "Captain Morgan",
                         state: "fresh",
-                        value: 300
+                        value: 200
                     }, {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "In its basic form, this cocktail is just rum, lime juice & sugar shaken over ice",
+                        answer: "A Daiquiri",
                         state: "fresh",
                         value: 400
                     }, {
-                        clue: "Helllo World....I'm getting lazy",
-                        answer: "Helllo World....I'm getting lazy",
+                        clue: "The 'original melon liqueur' from Suntory; it'll turn you green with envy",
+                        answer: "Midori",
                         state: "fresh",
                         value: 500
                     },
